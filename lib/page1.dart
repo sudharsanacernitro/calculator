@@ -1,29 +1,20 @@
 import 'package:flutter/material.dart';
 
+
+
+
 class Page1 extends StatefulWidget {
-  const Page1({super.key});
+  const Page1({Key? key}) : super(key: key);
 
   @override
-  State<Page1> createState() => _Page1State();
+  _PageState createState() => _PageState();
 }
 
-class _Page1State extends State<Page1> {
-  double result = 0;
+class _PageState extends State<Page1> {
   final TextEditingController _controller1 = TextEditingController();
   final TextEditingController _controller2 = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller1.dispose();
-    _controller2.dispose();
-    super.dispose();
-  }
-
+  double result = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,26 +47,65 @@ class _Page1State extends State<Page1> {
               controller: _controller2,
             ),
             Container(
-              padding: const EdgeInsets.all(10),
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    double num1 = double.tryParse(_controller1.text) ?? 0;
-                    double num2 = double.tryParse(_controller2.text) ?? 0;
-                    result = num1 + num2;
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.amber,
-                  foregroundColor: Colors.black,
-                ),
-                child: const Text("Add"),
-              ),
+              width:double.infinity,
+              child:Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [button("Add"),
+            button("Sub"),],
             ),
+            ),
+
+            Container(
+              width:double.infinity,
+              child:Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [button("Mul"),
+            button("Div"),],
+            ),
+            )
+  
           ],
         ),
       ),
     );
+  }
+
+  Container button(String a) {
+    
+    return Container(
+            padding: const EdgeInsets.all(10),
+            child: ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  double num1 = double.tryParse(_controller1.text) ?? 0;
+                  double num2 = double.tryParse(_controller2.text) ?? 0;
+                  switch(a)
+                  {
+                    case "Add":
+                      result=num1+num2;
+                      break;
+                    case "Sub":
+                      result=num1-num2;
+                      break;
+                    case "Mul":
+                      result=num1*num2;
+                      break;
+                    case "Div":
+                      result=num1/num2;
+                      break;
+                  }
+                });
+                  
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.amber,
+                foregroundColor: Colors.black,
+              ),
+              child:  Text(a),
+            ),
+          );
   }
 }
 
